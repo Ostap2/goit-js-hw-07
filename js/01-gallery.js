@@ -28,7 +28,7 @@ gallery.append(...galleryItemsMarkup);
 gallery.addEventListener('click', handleGalleryClick);
 
 function handleGalleryClick(event) {
-  // event.preventDefault();
+  event.preventDefault();
 
   const { target } = event;
   if (target.nodeName !== 'IMG') {
