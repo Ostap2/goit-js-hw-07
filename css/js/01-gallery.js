@@ -1,50 +1,54 @@
 import { galleryItems } from './gallery-items.js';
-// Change code below this line
-
-
 
 const gallery = document.querySelector('.gallery');
 
-function createGalleryItem(item) {
+const createGalleryItem = ({ preview, original, description }) => {
   const galleryItem = document.createElement('li');
   galleryItem.classList.add('gallery__item');
 
-  const link = document.createElement('a');
-  link.classList.add('gallery__link');
-  link.href = item.original;
+  const galleryLink = document.createElement('a');
+  galleryLink.classList.add('gallery__link');
+  galleryLink.href = original;
 
-  const image = document.createElement('img');
-  image.classList.add('gallery__image');
-  image.src = item.preview;
-  image.setAttribute('data-source', item.original);
-  image.alt = item.description;
+  const galleryImage = document.createElement('img');
+  galleryImage.classList.add('gallery__image');
+  galleryImage.src = preview;
+  galleryImage.alt = description;
+  galleryImage.dataset.source = original;
 
-  link.appendChild(image);
-  galleryItem.appendChild(link);
+  galleryLink.appendChild(galleryImage);
+  galleryItem.appendChild(galleryLink);
 
   return galleryItem;
-}
+};
 
-function openModal(event) {
+const galleryItemsMarkup = galleryItems.map(createGalleryItem);
+gallery.append(...galleryItemsMarkup);
+
+gallery.addEventListener('click', handleGalleryClick);
+
+function handleGalleryClick(event) {
   event.preventDefault();
 
-  if (event.target.nodeName !== 'IMG') {
+  const { target } = event;
+  if (target.nodeName !== 'IMG') {
     return;
   }
 
-  const largeImageSrc = event.target.dataset.source;
+  const largeImageUrl = target.dataset.source;
 
-  const instance = basicLightbox.create(
-    `<img src="${largeImageSrc}" alt="Full Size Image">`
-  );
+  const instance = basicLightbox.create(`
+    <img src="${largeImageUrl}" width="800" height="600">
+  `);
 
   instance.show();
+
+  window.addEventListener('keydown', handleKeyPress);
+
+  function handleKeyPress(event) {
+    if (event.code === 'Escape') {
+      instance.close();
+      window.removeEventListener('keydown', handleKeyPress);
+    }
+  }
 }
-
-gallery.addEventListener('click', openModal);
-
-galleryItems.forEach(item => {
-  const galleryItem = createGalleryItem(item);
-  gallery.appendChild(galleryItem);
-});
-console.log(galleryItems);

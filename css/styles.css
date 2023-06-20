@@ -42,3 +42,34 @@
 .gallery__link:hover {
   cursor: zoom-in;
 }
+
+.gallery {
+     
+
+  .gallery
+
+ 
+
+  .gallery {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    list-style: none;
+    padding: 0;
+  }
+
+  .gallery__item {
+    margin: 10px;
+  }
+
+  .gallery__link {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .gallery__image {
+    width: 200px;
+    height: auto;
+  }
+}
