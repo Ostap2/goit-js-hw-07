@@ -1,6 +1,6 @@
 import { galleryItems } from './gallery-items.js';
-import SimpleLightbox from 'simplelightbox';
-import 'simplelightbox/dist/simple-lightbox.min.css';
+import SimpleLightbox from 'simplelightbox/dist/simple-lightbox.min.js';
+import 'simplelightbox/dist/simplelightbox.min.css';
 
 const gallery = document.querySelector('.gallery');
 
