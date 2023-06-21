@@ -1,30 +1,20 @@
 import { galleryItems } from './gallery-items.js';
+import * as basicLightbox from 'basiclightbox';
 
 const gallery = document.querySelector('.gallery');
 
-const createGalleryItem = ({ preview, original, description }) => {
-  const galleryItem = document.createElement('li');
-  galleryItem.classList.add('gallery__item');
+// Generate gallery items dynamically
+const galleryItemsMarkup = galleryItems.map(({ preview, original, description }) => `
+  <li class="gallery__item">
+    <a class="gallery__link" href="${original}">
+      <img class="gallery__image" src="${preview}" data-source="${original}" alt="${description}" />
+    </a>
+  </li>
+`);
 
-  const galleryLink = document.createElement('a');
-  galleryLink.classList.add('gallery__link');
-  galleryLink.href = original;
+gallery.innerHTML = galleryItemsMarkup.join('');
 
-  const galleryImage = document.createElement('img');
-  galleryImage.classList.add('gallery__image');
-  galleryImage.src = preview;
-  galleryImage.alt = description;
-  galleryImage.dataset.source = original;
-
-  galleryLink.appendChild(galleryImage);
-  galleryItem.appendChild(galleryLink);
-
-  return galleryItem;
-};
-
-const galleryItemsMarkup = galleryItems.map(createGalleryItem);
-gallery.append(...galleryItemsMarkup);
-
+// Open modal on gallery item click
 gallery.addEventListener('click', handleGalleryClick);
 
 function handleGalleryClick(event) {
@@ -52,3 +42,18 @@ function handleGalleryClick(event) {
     }
   }
 }
+
+
+export const galleryItems = [
+  {
+    preview: 'images/preview1.jpg',
+    original: 'images/original1.jpg',
+    description: 'Image 1',
+  },
+  {
+    preview: 'images/preview2.jpg',
+    original: 'images/original2.jpg',
+    description: 'Image 2',
+  },
+  // Додайте інші елементи галереї тут
+];
