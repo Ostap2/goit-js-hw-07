@@ -42,18 +42,3 @@ function handleGalleryClick(event) {
     }
   }
 }
-
-
-export const galleryItems = [
-  {
-    preview: 'images/preview1.jpg',
-    original: 'images/original1.jpg',
-    description: 'Image 1',
-  },
-  {
-    preview: 'images/preview2.jpg',
-    original: 'images/original2.jpg',
-    description: 'Image 2',
-  },
-  // Додайте інші елементи галереї тут
-];
