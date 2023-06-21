@@ -1,20 +1,30 @@
 import { galleryItems } from './gallery-items.js';
-import * as basicLightbox from 'basiclightbox';
 
 const gallery = document.querySelector('.gallery');
 
-// Generate gallery items dynamically
-const galleryItemsMarkup = galleryItems.map(({ preview, original, description }) => `
-  <li class="gallery__item">
-    <a class="gallery__link" href="${original}">
-      <img class="gallery__image" src="${preview}" data-source="${original}" alt="${description}" />
-    </a>
-  </li>
-`);
+const createGalleryItem = ({ preview, original, description }) => {
+  const galleryItem = document.createElement('li');
+  galleryItem.classList.add('gallery__item');
 
-gallery.innerHTML = galleryItemsMarkup.join('');
+  const galleryLink = document.createElement('a');
+  galleryLink.classList.add('gallery__link');
+  galleryLink.href = original;
 
-// Open modal on gallery item click
+  const galleryImage = document.createElement('img');
+  galleryImage.classList.add('gallery__image');
+  galleryImage.src = preview;
+  galleryImage.alt = description;
+  galleryImage.dataset.source = original;
+
+  galleryLink.appendChild(galleryImage);
+  galleryItem.appendChild(galleryLink);
+
+  return galleryItem;
+};
+
+const galleryItemsMarkup = galleryItems.map(createGalleryItem);
+gallery.append(...galleryItemsMarkup);
+
 gallery.addEventListener('click', handleGalleryClick);
 
 function handleGalleryClick(event) {
