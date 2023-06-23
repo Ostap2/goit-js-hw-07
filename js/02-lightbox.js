@@ -41,43 +41,26 @@ lightbox.on('show.simplelightbox', function (e) {
   caption.innerText = e.caption;
   e.element.appendChild(caption);
 
-  // Enable image switching with on-screen arrow buttons
+  // Enable image switching with custom arrow buttons
   const nextButton = document.createElement('button');
-  nextButton.classList.add('sl-arrow', 'sl-next');
-  nextButton.innerHTML = '&gt;';
+  nextButton.classList.add('custom-arrow', 'next-arrow');
+  nextButton.innerHTML = 'Next';
   e.element.appendChild(nextButton);
 
   const prevButton = document.createElement('button');
-  prevButton.classList.add('sl-arrow', 'sl-prev');
-  prevButton.innerHTML = '&lt;';
+  prevButton.classList.add('custom-arrow', 'prev-arrow');
+  prevButton.innerHTML = 'Prev';
   e.element.appendChild(prevButton);
 
   nextButton.addEventListener('click', lightbox.next);
   prevButton.addEventListener('click', lightbox.prev);
-
-  // Enable image switching with keyboard arrow keys
-  document.addEventListener('keydown', handleKeyPress);
 });
 
 lightbox.on('close.simplelightbox', function () {
   const captions = document.querySelectorAll('.caption');
   captions.forEach((caption) => caption.remove());
 
-  // Disable image switching with on-screen arrow buttons
-  const nextButton = document.querySelector('.sl-next');
-  const prevButton = document.querySelector('.sl-prev');
-
-  nextButton.removeEventListener('click', lightbox.next);
-  prevButton.removeEventListener('click', lightbox.prev);
-
-  // Disable image switching with keyboard arrow keys
-  document.removeEventListener('keydown', handleKeyPress);
+  // Clean up custom arrow buttons
+  const customArrows = document.querySelectorAll('.custom-arrow');
+  customArrows.forEach((arrow) => arrow.remove());
 });
-
-function handleKeyPress(event) {
-  if (event.key === 'ArrowRight') {
-    lightbox.next();
-  } else if (event.key === 'ArrowLeft') {
-    lightbox.prev();
-  }
-}
