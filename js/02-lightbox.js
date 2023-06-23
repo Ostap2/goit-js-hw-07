@@ -41,22 +41,43 @@ lightbox.on('show.simplelightbox', function (e) {
   caption.innerText = e.caption;
   e.element.appendChild(caption);
 
-  // Enable image switching with on-screen controls and mouse clicks
-  const nextButton = document.querySelector('.sl-next');
-  const prevButton = document.querySelector('.sl-prev');
+  // Enable image switching with on-screen arrow buttons
+  const nextButton = document.createElement('button');
+  nextButton.classList.add('sl-arrow', 'sl-next');
+  nextButton.innerHTML = '&gt;';
+  e.element.appendChild(nextButton);
+
+  const prevButton = document.createElement('button');
+  prevButton.classList.add('sl-arrow', 'sl-prev');
+  prevButton.innerHTML = '&lt;';
+  e.element.appendChild(prevButton);
 
   nextButton.addEventListener('click', lightbox.next);
   prevButton.addEventListener('click', lightbox.prev);
+
+  // Enable image switching with keyboard arrow keys
+  document.addEventListener('keydown', handleKeyPress);
 });
 
 lightbox.on('close.simplelightbox', function () {
   const captions = document.querySelectorAll('.caption');
   captions.forEach((caption) => caption.remove());
 
-  // Disable image switching with on-screen controls and mouse clicks
+  // Disable image switching with on-screen arrow buttons
   const nextButton = document.querySelector('.sl-next');
   const prevButton = document.querySelector('.sl-prev');
 
   nextButton.removeEventListener('click', lightbox.next);
   prevButton.removeEventListener('click', lightbox.prev);
+
+  // Disable image switching with keyboard arrow keys
+  document.removeEventListener('keydown', handleKeyPress);
 });
+
+function handleKeyPress(event) {
+  if (event.key === 'ArrowRight') {
+    lightbox.next();
+  } else if (event.key === 'ArrowLeft') {
+    lightbox.prev();
+  }
+}
