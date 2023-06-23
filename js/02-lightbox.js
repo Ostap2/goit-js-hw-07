@@ -36,54 +36,19 @@ function handleGalleryClick(event) {
   }
 
   const largeImageUrl = target.dataset.source;
-  const currentIndex = galleryItems.findIndex(
-    (item) => item.original === largeImageUrl
-  );
 
-  const lightbox = new SimpleLightbox('.gallery a', {
-    captionsData: 'alt',
-    captionDelay: 250,
-    elementsSelector: 'img',
-    onElementClick: (instance) => {
-      instance.close();
-    },
-    onNext: (instance) => {
-      navigate('right', instance);
-    },
-    onPrevious: (instance) => {
-      navigate('left', instance);
-    },
-  });
+  const instance = basicLightbox.create(`
+    <img src="${largeImageUrl}" width="800" height="600">
+  `);
 
-  lightbox.on('show.simplelightbox', () => {
-    window.addEventListener('keydown', handleKeyPress);
-  });
+  instance.show();
 
-  lightbox.on('close.simplelightbox', () => {
-    window.removeEventListener('keydown', handleKeyPress);
-  });
-
-  lightbox.show();
+  window.addEventListener('keydown', handleKeyPress);
 
   function handleKeyPress(event) {
-    if (event.code === 'ArrowLeft') {
-      navigate('left', lightbox);
-    } else if (event.code === 'ArrowRight') {
-      navigate('right', lightbox);
-    } else if (event.code === 'Escape') {
-      lightbox.close();
+    if (event.code === 'Escape') {
+      instance.close();
+      window.removeEventListener('keydown', handleKeyPress);
     }
-  }
-
-  function navigate(direction, instance) {
-    const newIndex =
-      direction === 'left'
-        ? currentIndex - 1 < 0
-          ? galleryItems.length - 1
-          : currentIndex - 1
-        : (currentIndex + 1) % galleryItems.length;
-
-    const newImage = galleryItems[newIndex];
-    instance.load(newImage.original);
   }
 }
