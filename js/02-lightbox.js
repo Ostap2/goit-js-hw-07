@@ -36,23 +36,22 @@ lightbox.on('show.simplelightbox', function (e) {
   caption.innerText = e.caption;
   e.element.appendChild(caption);
 
-  // Enable image switching in full-screen mode
-  document.addEventListener('keydown', handleKeyPressInFullScreen);
+  // Enable image switching with on-screen controls and mouse clicks
+  const nextButton = document.querySelector('.sl-next');
+  const prevButton = document.querySelector('.sl-prev');
+
+  nextButton.addEventListener('click', lightbox.next);
+  prevButton.addEventListener('click', lightbox.prev);
 });
 
 lightbox.on('close.simplelightbox', function () {
   const captions = document.querySelectorAll('.caption');
   captions.forEach((caption) => caption.remove());
 
-  // Disable image switching when not in full-screen mode
-  document.removeEventListener('keydown', handleKeyPressInFullScreen);
-});
+  // Disable image switching with on-screen controls and mouse clicks
+  const nextButton = document.querySelector('.sl-next');
+  const prevButton = document.querySelector('.sl-prev');
 
-function handleKeyPressInFullScreen(event) {
-  const { key } = event;
-  if (key === 'ArrowLeft') {
-    lightbox.prev();
-  } else if (key === 'ArrowRight') {
-    lightbox.next();
-  }
-}
+  nextButton.removeEventListener('click', lightbox.next);
+  prevButton.removeEventListener('click', lightbox.prev);
+});
