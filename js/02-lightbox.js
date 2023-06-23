@@ -47,8 +47,8 @@ document.addEventListener('keydown', handleKeyPress);
 function handleKeyPress(event) {
   const { key } = event;
   if (key === 'ArrowLeft') {
-    lightbox.prev();
+    lightbox.element().querySelector('.sl-prev').click();
   } else if (key === 'ArrowRight') {
-    lightbox.next();
+    lightbox.element().querySelector('.sl-next').click();
   }
 }
