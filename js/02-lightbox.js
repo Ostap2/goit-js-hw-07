@@ -25,42 +25,73 @@ const createGalleryItem = ({ preview, original, description }) => {
 const galleryItemsMarkup = galleryItems.map(createGalleryItem);
 gallery.append(...galleryItemsMarkup);
 
-const lightbox = new SimpleLightbox('.gallery a', {
-  captionsData: 'alt',
-  captionDelay: 250,
-});
+gallery.addEventListener('click', handleGalleryClick);
 
-gallery.addEventListener('click', (event) => {
+function handleGalleryClick(event) {
   event.preventDefault();
-  lightbox.open();
-});
 
-lightbox.on('show.simplelightbox', function (e) {
-  const caption = document.createElement('div');
-  caption.classList.add('caption');
-  caption.innerText = e.caption;
-  e.element.appendChild(caption);
+  const { target } = event;
+  if (target.nodeName !== 'IMG') {
+    return;
+  }
 
-  // Enable image switching with custom arrow buttons
-  const nextButton = document.createElement('button');
-  nextButton.classList.add('custom-arrow', 'next-arrow');
-  nextButton.innerHTML = 'Next';
-  e.element.appendChild(nextButton);
+  const largeImageUrl = target.dataset.source;
+  const currentIndex = galleryItems.findIndex(
+    (item) => item.original === largeImageUrl
+  );
 
-  const prevButton = document.createElement('button');
-  prevButton.classList.add('custom-arrow', 'prev-arrow');
-  prevButton.innerHTML = 'Prev';
-  e.element.appendChild(prevButton);
+  const instance = basicLightbox.create(
+    `<img src="${largeImageUrl}" width="800" height="600">`,
+    {
+      onShow: (instance) => {
+        const imageElement = instance.element().querySelector('img');
 
-  nextButton.addEventListener('click', lightbox.next);
-  prevButton.addEventListener('click', lightbox.prev);
-});
+        imageElement.addEventListener('click', handleImageClick);
+        window.addEventListener('keydown', handleKeyPress);
 
-lightbox.on('close.simplelightbox', function () {
-  const captions = document.querySelectorAll('.caption');
-  captions.forEach((caption) => caption.remove());
+        function handleImageClick() {
+          instance.close();
+        }
 
-  // Clean up custom arrow buttons
-  const customArrows = document.querySelectorAll('.custom-arrow');
-  customArrows.forEach((arrow) => arrow.remove());
-});
+        function handleKeyPress(event) {
+          if (event.code === 'ArrowLeft') {
+            navigate('left');
+          } else if (event.code === 'ArrowRight') {
+            navigate('right');
+          } else if (event.code === 'Escape') {
+            instance.close();
+          }
+        }
+      },
+      onClose: (instance) => {
+        const imageElement = instance.element().querySelector('img');
+
+        imageElement.removeEventListener('click', handleImageClick);
+        window.removeEventListener('keydown', handleKeyPress);
+      },
+    }
+  );
+
+  instance.show();
+
+  function navigate(direction) {
+    let newIndex;
+    if (direction === 'left') {
+      newIndex = currentIndex - 1;
+      if (newIndex < 0) {
+        newIndex = galleryItems.length - 1;
+      }
+    } else if (direction === 'right') {
+      newIndex = currentIndex + 1;
+      if (newIndex >= galleryItems.length) {
+        newIndex = 0;
+      }
+    }
+
+    const newImage = galleryItems[newIndex];
+    instance.element().querySelector('img').src = newImage.original;
+    instance.element().querySelector('.caption').textContent =
+      newImage.description;
+    instance.refresh();
+  }
+}
