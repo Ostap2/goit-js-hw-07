@@ -40,58 +40,50 @@ function handleGalleryClick(event) {
     (item) => item.original === largeImageUrl
   );
 
-  const instance = basicLightbox.create(
-    `<img src="${largeImageUrl}" width="800" height="600">`,
-    {
-      onShow: (instance) => {
-        const imageElement = instance.element().querySelector('img');
+  const lightbox = new SimpleLightbox('.gallery a', {
+    captionsData: 'alt',
+    captionDelay: 250,
+    elementsSelector: 'img',
+    onElementClick: (instance) => {
+      instance.close();
+    },
+    onNext: (instance) => {
+      navigate('right', instance);
+    },
+    onPrevious: (instance) => {
+      navigate('left', instance);
+    },
+  });
 
-        imageElement.addEventListener('click', handleImageClick);
-        window.addEventListener('keydown', handleKeyPress);
+  lightbox.on('show.simplelightbox', () => {
+    window.addEventListener('keydown', handleKeyPress);
+  });
 
-        function handleImageClick() {
-          instance.close();
-        }
+  lightbox.on('close.simplelightbox', () => {
+    window.removeEventListener('keydown', handleKeyPress);
+  });
 
-        function handleKeyPress(event) {
-          if (event.code === 'ArrowLeft') {
-            navigate('left');
-          } else if (event.code === 'ArrowRight') {
-            navigate('right');
-          } else if (event.code === 'Escape') {
-            instance.close();
-          }
-        }
-      },
-      onClose: (instance) => {
-        const imageElement = instance.element().querySelector('img');
+  lightbox.show();
 
-        imageElement.removeEventListener('click', handleImageClick);
-        window.removeEventListener('keydown', handleKeyPress);
-      },
+  function handleKeyPress(event) {
+    if (event.code === 'ArrowLeft') {
+      navigate('left', lightbox);
+    } else if (event.code === 'ArrowRight') {
+      navigate('right', lightbox);
+    } else if (event.code === 'Escape') {
+      lightbox.close();
     }
-  );
+  }
 
-  instance.show();
-
-  function navigate(direction) {
-    let newIndex;
-    if (direction === 'left') {
-      newIndex = currentIndex - 1;
-      if (newIndex < 0) {
-        newIndex = galleryItems.length - 1;
-      }
-    } else if (direction === 'right') {
-      newIndex = currentIndex + 1;
-      if (newIndex >= galleryItems.length) {
-        newIndex = 0;
-      }
-    }
+  function navigate(direction, instance) {
+    const newIndex =
+      direction === 'left'
+        ? currentIndex - 1 < 0
+          ? galleryItems.length - 1
+          : currentIndex - 1
+        : (currentIndex + 1) % galleryItems.length;
 
     const newImage = galleryItems[newIndex];
-    instance.element().querySelector('img').src = newImage.original;
-    instance.element().querySelector('.caption').textContent =
-      newImage.description;
-    instance.refresh();
+    instance.load(newImage.original);
   }
 }
