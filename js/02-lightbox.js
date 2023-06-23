@@ -30,6 +30,11 @@ const lightbox = new SimpleLightbox('.gallery a', {
   captionDelay: 250,
 });
 
+gallery.addEventListener('click', (event) => {
+  event.preventDefault();
+  lightbox.open();
+});
+
 lightbox.on('show.simplelightbox', function (e) {
   const caption = document.createElement('div');
   caption.classList.add('caption');
