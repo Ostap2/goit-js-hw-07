@@ -14,6 +14,7 @@ const createGalleryItem = ({ preview, original, description }) => {
   galleryImage.classList.add('gallery__image');
   galleryImage.src = preview;
   galleryImage.alt = description;
+  galleryImage.dataset.source = original;
 
   galleryLink.appendChild(galleryImage);
   galleryItem.appendChild(galleryLink);
@@ -40,3 +41,14 @@ lightbox.on('close.simplelightbox', function () {
   const captions = document.querySelectorAll('.caption');
   captions.forEach((caption) => caption.remove());
 });
+
+document.addEventListener('keydown', handleKeyPress);
+
+function handleKeyPress(event) {
+  const { key } = event;
+  if (key === 'ArrowLeft') {
+    lightbox.prev();
+  } else if (key === 'ArrowRight') {
+    lightbox.next();
+  }
+}
