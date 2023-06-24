@@ -1,29 +1,12 @@
-import { galleryItems } from './gallery-items.js';
+
+  import { galleryItems } from './gallery-items.js';
 
 
 
-const lightbox = new SimpleLightbox('.gallery a', {
-  captionsData: 'alt',
-  captionDelay: 250,
-  scrollZoom: false,
-  });
+
+  import { galleryItems } from './gallery-items.js';
 
   document.addEventListener("DOMContentLoaded", function () {
-    // Масив даних для галереї
-    var galleryItems = [
-      {
-        small: "small-image-1.jpg",
-        large: "large-image-1.jpg",
-        alt: "Image description 1"
-      },
-      {
-        small: "small-image-2.jpg",
-        large: "large-image-2.jpg",
-        alt: "Image description 2"
-      },
-      // Додайте решту елементів галереї
-    ];
-  
     // Функція для створення елемента галереї
     function createGalleryItem(item) {
       var listItem = document.createElement("li");
@@ -54,11 +37,10 @@ const lightbox = new SimpleLightbox('.gallery a', {
     });
   
     // Підключення бібліотеки SimpleLightbox
-    var lightbox = new SimpleLightbox(".gallery a", {
-      captions: true,               // Включити підписи
-      captionsData: "alt",          // Використовувати атрибут alt для підписів
-      captionPosition: "bottom",    // Позиція підпису: 'top', 'bottom', 'left', 'right'
-      captionDelay: 250             // Затримка перед відображенням підпису (у мілісекундах)
-    });
+const lightbox = new SimpleLightbox('.gallery a', {
+  captionsData: 'alt',
+  captionDelay: 250,
+  scrollZoom: false,
+  });
   });
   
