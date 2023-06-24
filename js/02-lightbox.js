@@ -42,3 +42,17 @@ const lightbox = new SimpleLightbox('.gallery__link', {
   captionsData: 'alt',
   captionDelay: 250,
 });
+document.addEventListener('DOMContentLoaded', function() {
+  const lightbox = new SimpleLightbox('.gallery a');
+
+  const prevButton = document.querySelector('.prev-button');
+  const nextButton = document.querySelector('.next-button');
+
+  prevButton.addEventListener('click', function() {
+    lightbox.prev();
+  });
+
+  nextButton.addEventListener('click', function() {
+    lightbox.next();
+  });
+});
