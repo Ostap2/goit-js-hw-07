@@ -1,6 +1,21 @@
 import { galleryItems } from './gallery-items.js';
 
-var lightbox = $('.gallery a').simpleLightbox({ /* options */ });
+// Отримати посилання на елементи, на які ви бажаєте додати переключення
+var nextButton = document.querySelector('.next-button');
+var prevButton = document.querySelector('.prev-button');
+
+// Підключитись до екземпляра SimpleLightbox
+var lightbox = new SimpleLightbox('.gallery');
+
+// Додати обробник подій для наступної фотографії
+nextButton.addEventListener('click', function() {
+  lightbox.next();
+});
+
+// Додати обробник подій для попередньої фотографії
+prevButton.addEventListener('click', function() {
+  lightbox.prev();
+});
 
 const gallery = document.querySelector('.gallery');
 
