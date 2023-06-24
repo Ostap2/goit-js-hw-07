@@ -56,3 +56,17 @@ document.addEventListener('DOMContentLoaded', function() {
     lightbox.next();
   });
 });
+document.addEventListener('DOMContentLoaded', function() {
+  const lightbox = new SimpleLightbox('.gallery a');
+
+  const prevButton = document.querySelector('.prev-button');
+  const nextButton = document.querySelector('.next-button');
+
+  prevButton.addEventListener('click', function() {
+    lightbox.prev();
+  });
+
+  nextButton.addEventListener('click', function() {
+    lightbox.next();
+  });
+});
