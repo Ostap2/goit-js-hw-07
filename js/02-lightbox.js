@@ -1,12 +1,6 @@
 import { galleryItems } from './gallery-items.js';
 
-const galleryItems = [
-  // Gallery items data here
-];
-
 const gallery = document.querySelector('.gallery');
-const prevButton = document.getElementById('prevButton');
-const nextButton = document.getElementById('nextButton');
 
 const createGalleryItem = ({ preview, original, description }) => {
   const galleryItem = document.createElement('li');
@@ -30,15 +24,21 @@ const createGalleryItem = ({ preview, original, description }) => {
 const galleryItemsMarkup = galleryItems.map(createGalleryItem);
 gallery.append(...galleryItemsMarkup);
 
-const lightbox = new SimpleLightbox('.gallery a', {
-  captionsData: 'alt',
-  captionDelay: 250
+document.addEventListener('DOMContentLoaded', () => {
+  const lightbox = new SimpleLightbox('.gallery a', {
+    captions: true,
+    captionDelay: 250,
+    captionsData: 'alt',
+    captionPosition: 'bottom',
+    captionsDelayMultiplier: 1.5,
+    elementsSelector: '.gallery__link', // Додали селектор елементів галереї
+    docClose: false, // Вимкнули закриття модального вікна при кліку на документ
+    nav: true, // Включили перемикачі вліво/вправо
+    navText: ['&larr;', '&rarr;'], // Текст для кнопок перемикачів
+    navClass: ['simple-lightbox__nav--prev', 'simple-lightbox__nav--next'], // Класи для кнопок перемикачів
+  });
 });
 
-prevButton.addEventListener('click', () => {
-  lightbox.prev();
-});
 
-nextButton.addEventListener('click', () => {
-  lightbox.next();
-});
+
+
