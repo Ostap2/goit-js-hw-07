@@ -54,31 +54,4 @@ function handleGalleryClick(event) {
 }
 
 
-// Отримати посилання на елементи, на які ви бажаєте додати переключення
-var nextButton = document.querySelector('.next-button');
-var prevButton = document.querySelector('.prev-button');
 
-// Підключитись до екземпляра SimpleLightbox
-var lightbox = new SimpleLightbox('.gallery');
-
-// Додати обробник подій для відкриття фотографій
-lightbox.on('show.simplelightbox', function() {
-  nextButton.style.display = 'block';
-  prevButton.style.display = 'block';
-});
-
-// Додати обробник подій для закриття фотографій
-lightbox.on('close.simplelightbox', function() {
-  nextButton.style.display = 'none';
-  prevButton.style.display = 'none';
-});
-
-// Додати обробник подій для наступної фотографії
-nextButton.addEventListener('click', function() {
-  lightbox.next();
-});
-
-// Додати обробник подій для попередньої фотографії
-prevButton.addEventListener('click', function() {
-  lightbox.prev();
-});
