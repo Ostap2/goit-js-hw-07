@@ -43,24 +43,45 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-const galleryItems = [
-  // Gallery items data here
-];
+ const galleryItems = [
+      // Gallery items data here
+    ];
 
-const prevButton = document.getElementById('prevButton');
-const nextButton = document.getElementById('nextButton');
+    const gallery = document.querySelector('.gallery');
+    const prevButton = document.getElementById('prevButton');
+    const nextButton = document.getElementById('nextButton');
 
+    const createGalleryItem = ({ preview, original, description }) => {
+      const galleryItem = document.createElement('li');
+      galleryItem.classList.add('gallery__item');
 
+      const galleryLink = document.createElement('a');
+      galleryLink.classList.add('gallery__link');
+      galleryLink.href = original;
 
-const lightbox = new SimpleLightbox('.gallery a', {
-  captionsData: 'alt',
-  captionDelay: 250
-});
+      const galleryImage = document.createElement('img');
+      galleryImage.classList.add('gallery__image');
+      galleryImage.src = preview;
+      galleryImage.alt = description;
 
-prevButton.addEventListener('click', () => {
-  lightbox.prev();
-});
+      galleryLink.appendChild(galleryImage);
+      galleryItem.appendChild(galleryLink);
 
-nextButton.addEventListener('click', () => {
-  lightbox.next();
-});
+      return galleryItem;
+    };
+
+    const galleryItemsMarkup = galleryItems.map(createGalleryItem);
+    gallery.append(...galleryItemsMarkup);
+
+    const lightbox = new SimpleLightbox('.gallery a', {
+      captionsData: 'alt',
+      captionDelay: 250
+    });
+
+    prevButton.addEventListener('click', () => {
+      lightbox.prev();
+    });
+
+    nextButton.addEventListener('click', () => {
+      lightbox.next();
+    });
