@@ -2,22 +2,11 @@ import { galleryItems } from './gallery-items.js';
 
 
 
-var lightbox = new SimpleLightbox('.gallery a', {
-  sourceAttr: './gallery-items.js',
-  captionType: 'alt',            
-  captionsData: 'galery',     
-  captionPosition: 'bottom',      
-  captionDelay: 250,               
-  animationSlide: true,            
-  animationSpeed: 250,             
-  animationLoop: false,             
-  animationAuto: false,            
-  preloading: true,                
-  enableKeyboard: true,            
-  docClose: true,                  
-  swipeTolerance: 50,              
-  alertError: true                
-});
+const lightbox = new SimpleLightbox('.gallery a', {
+  captionsData: 'alt',
+  captionDelay: 250,
+  scrollZoom: false,
+  });
 
 
 
