@@ -24,33 +24,5 @@ const createGalleryItem = ({ preview, original, description }) => {
 const galleryItemsMarkup = galleryItems.map(createGalleryItem);
 gallery.append(...galleryItemsMarkup);
 
-document.addEventListener('DOMContentLoaded', () => {
-  const lightbox = new SimpleLightbox('.gallery a', {
-    captions: true,
-    captionDelay: 250,
-    captionsData: 'alt',
-    captionPosition: 'bottom',
-    captionsDelayMultiplier: 1.5,
-    elementsSelector: '.gallery__link', // Додали селектор елементів галереї
-    docClose: false, // Вимкнули закриття модального вікна при кліку на документ
-    nav: true, // Включили перемикачі вліво/вправо
-    navText: ['&larr;', '&rarr;'], // Текст для кнопок перемикачів
-    navClass: ['simple-lightbox__nav--prev', 'simple-lightbox__nav--next'], // Класи для кнопок перемикачів
-  });
-});
 
-  // Після завантаження сторінки і галереї
-  document.addEventListener("DOMContentLoaded", function() {
-    // Ініціалізуємо simpleLightbox
-    var gallery = new SimpleLightbox(".gallery");
 
-    // Обробник події кліку на кнопку "вліво"
-    document.getElementById("prevButton").addEventListener("click", function() {
-      gallery.prev();
-    });
-
-    // Обробник події кліку на кнопку "вправо"
-    document.getElementById("nextButton").addEventListener("click", function() {
-      gallery.next();
-    });
-  });
