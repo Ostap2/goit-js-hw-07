@@ -1,57 +1,44 @@
-import { galleryItems } from './gallery-items.js';
+// Масив даних галереї
+const galleryItems = [
+  {
+    preview: 'small-image1.jpg',
+    original: 'large-image1.jpg',
+    description: 'Image 1',
+  },
+  {
+    preview: 'small-image2.jpg',
+    original: 'large-image2.jpg',
+    description: 'Image 2',
+  },
+  {
+    preview: 'small-image3.jpg',
+    original: 'large-image3.jpg',
+    description: 'Image 3',
+  },
+  // Додайте більше об'єктів зображень при потребі
+];
 
-const gallery = document.querySelector('.gallery');
+// Отримати посилання на елемент галереї
+const galleryContainer = document.querySelector('.gallery');
 
-const createGalleryItem = ({ preview, original, description }) => {
-  const galleryItem = document.createElement('li');
-  galleryItem.classList.add('gallery__item');
+// Створення розмітки галереї
+const galleryMarkup = galleryItems
+  .map(({ preview, original, description }) => {
+    return `
+      <li class="gallery__item">
+        <a class="gallery__link" href="${original}">
+          <img class="gallery__image" src="${preview}" alt="${description}" />
+        </a>
+      </li>
+    `;
+  })
+  .join('');
 
-  const galleryLink = document.createElement('a');
-  galleryLink.classList.add('gallery__link');
-  galleryLink.href = original;
+// Додавання розмітки до галереї
+galleryContainer.innerHTML = galleryMarkup;
 
-  const galleryImage = document.createElement('img');
-  galleryImage.classList.add('gallery__image');
-  galleryImage.src = preview;
-  galleryImage.alt = description;
-  galleryImage.dataset.source = original;
-
-  galleryLink.appendChild(galleryImage);
-  galleryItem.appendChild(galleryLink);
-
-  return galleryItem;
-};
-
-const galleryItemsMarkup = galleryItems.map(createGalleryItem);
-gallery.append(...galleryItemsMarkup);
-
-gallery.addEventListener('click', handleGalleryClick);
-
-function handleGalleryClick(event) {
-  event.preventDefault();
-
-  const { target } = event;
-  if (target.nodeName !== 'IMG') {
-    return;
-  }
-
-  const largeImageUrl = target.dataset.source;
-
-  const instance = basicLightbox.create(`
-    <img src="${largeImageUrl}" width="800" height="600">
-  `);
-
-  instance.show();
-
-  window.addEventListener('keydown', handleKeyPress);
-
-  function handleKeyPress(event) {
-    if (event.code === 'Escape') {
-      instance.close();
-      window.removeEventListener('keydown', handleKeyPress);
-    }
-  }
-}
-
-
-
+// Ініціалізація бібліотеки SimpleLightbox
+const lightbox = new SimpleLightbox('.gallery__link', {
+  captionsData: 'alt',
+  captionDelay: 250,
+});
