@@ -38,3 +38,29 @@ document.addEventListener('DOMContentLoaded', () => {
     navClass: ['simple-lightbox__nav--prev', 'simple-lightbox__nav--next'], // Класи для кнопок перемикачів
   });
 });
+
+
+
+
+
+const galleryItems = [
+  // Gallery items data here
+];
+
+const prevButton = document.getElementById('prevButton');
+const nextButton = document.getElementById('nextButton');
+
+
+
+const lightbox = new SimpleLightbox('.gallery a', {
+  captionsData: 'alt',
+  captionDelay: 250
+});
+
+prevButton.addEventListener('click', () => {
+  lightbox.prev();
+});
+
+nextButton.addEventListener('click', () => {
+  lightbox.next();
+});
