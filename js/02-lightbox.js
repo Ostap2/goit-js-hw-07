@@ -1,5 +1,7 @@
 import { galleryItems } from './gallery-items.js';
 
+var lightbox = $('.gallery a').simpleLightbox({ /* options */ });
+
 const gallery = document.querySelector('.gallery');
 
 const createGalleryItem = ({ preview, original, description }) => {
