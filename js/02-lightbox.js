@@ -1,5 +1,14 @@
 import { galleryItems } from './gallery-items.js';
-var lightbox = new SimpleLightbox('.gallery a', { captionsData  });
+
+
+
+document.addEventListener('DOMContentLoaded', function() {
+  const lightbox = new SimpleLightbox('.gallery a');
+});
+
+
+
+
 const gallery = document.querySelector('.gallery');
 
 const createGalleryItem = ({ preview, original, description }) => {
