@@ -1,22 +1,5 @@
 import { galleryItems } from './gallery-items.js';
 
-// Отримати посилання на елементи, на які ви бажаєте додати переключення
-var nextButton = document.querySelector('.next-button');
-var prevButton = document.querySelector('.prev-button');
-
-// Підключитись до екземпляра SimpleLightbox
-var lightbox = new SimpleLightbox('.gallery');
-
-// Додати обробник подій для наступної фотографії
-nextButton.addEventListener('click', function() {
-  lightbox.next();
-});
-
-// Додати обробник подій для попередньої фотографії
-prevButton.addEventListener('click', function() {
-  lightbox.prev();
-});
-
 const gallery = document.querySelector('.gallery');
 
 const createGalleryItem = ({ preview, original, description }) => {
@@ -69,3 +52,25 @@ function handleGalleryClick(event) {
     }
   }
 }
+
+
+// Створити кнопку "Наступна"
+var nextButton = document.createElement('button');
+nextButton.textContent = 'Наступна';
+nextButton.addEventListener('click', function() {
+  lightbox.next();
+});
+
+// Створити кнопку "Попередня"
+var prevButton = document.createElement('button');
+prevButton.textContent = 'Попередня';
+prevButton.addEventListener('click', function() {
+  lightbox.prev();
+});
+
+// Знайти елемент, до якого потрібно додати кнопки
+var galleryContainer = document.querySelector('.gallery-container');
+
+// Додати кнопки до контейнера
+galleryContainer.appendChild(prevButton);
+galleryContainer.appendChild(nextButton);
