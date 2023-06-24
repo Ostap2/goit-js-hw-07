@@ -39,3 +39,18 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
+  // Після завантаження сторінки і галереї
+  document.addEventListener("DOMContentLoaded", function() {
+    // Ініціалізуємо simpleLightbox
+    var gallery = new SimpleLightbox(".gallery");
+
+    // Обробник події кліку на кнопку "вліво"
+    document.getElementById("prevButton").addEventListener("click", function() {
+      gallery.prev();
+    });
+
+    // Обробник події кліку на кнопку "вправо"
+    document.getElementById("nextButton").addEventListener("click", function() {
+      gallery.next();
+    });
+  });
