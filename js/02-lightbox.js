@@ -62,6 +62,16 @@ document.addEventListener('DOMContentLoaded', function() {
   const prevButton = document.querySelector('.prev-button');
   const nextButton = document.querySelector('.next-button');
 
+  lightbox.on('show.simplelightbox', function() {
+    prevButton.style.display = 'inline-block';
+    nextButton.style.display = 'inline-block';
+  });
+
+  lightbox.on('close.simplelightbox', function() {
+    prevButton.style.display = 'none';
+    nextButton.style.display = 'none';
+  });
+
   prevButton.addEventListener('click', function() {
     lightbox.prev();
   });
