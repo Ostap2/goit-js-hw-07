@@ -1,10 +1,4 @@
 
-
-const lightbox = new SimpleLightbox('.gallery a', {
-  captionsData: 'alt',
-  captionDelay: 250,
-  scrollZoom: false,
-  });
 // 02-lightbox.js
 
 import { galleryItems } from './gallery-items.js';
@@ -32,7 +26,7 @@ function initLightbox() {
   new SimpleLightbox('.gallery a', {
     captionsData: 'alt',
     captionDelay: 250,
-    captionPosition: 'bottom',
+    scrollZoom: false,
   });
 }
 
